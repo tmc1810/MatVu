@@ -18,7 +18,7 @@ document.getElementById("category-form").addEventListener("submit", function(eve
 
 
     <?php
-include './sidebar_quantri.php';
+include '../Main_QuanTri/nav.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['tenhang']) && isset($_POST['sdt']) && isset($_POST['diachi']) && isset($_POST['anhdaidien'])) {
@@ -38,7 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "INSERT INTO hang_san_xuat (ten_hang, so_dien_thoai, dia_chi, anh_dai_dien) VALUES ('$tenhang', '$sdt', '$diachi', '$anhdaidien')";
 
         if (mysqli_query($conn, $sql)) {
-            echo "Thêm hãng thành công!";
+            header("Location: index.php");
+            exit();
         } else {
             echo "Lỗi: " . mysqli_error($conn);
         }
@@ -65,13 +66,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label for="staticEmail" class="col-sm-2 col-form-label">Tên hãng</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="tenhang">
-                            </div>
-                        </div>
-
-                        <div class="mb-3 row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Thứ tự</label>
-                            <div class="col-sm-10">
-                                <input type="number" class="form-control" name="thutu" value="0">
                             </div>
                         </div>
 

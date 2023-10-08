@@ -5,15 +5,15 @@
 
 <body>
 <?php   
-        include '../Main_QuanTri/nav.php'
-    ?>
+    include '../Main_QuanTri/nav.php'
+?>
     <div class="content">
         <div class="accordion" id="accordionExample">
             <div class="accordion-item">
                 <div class="container-fluid bg-secondary">
                     <div class="hstack gap-2 ">
                         <div class="p-2"><h5>Quản lý tài khoản<h5></div>
-                        <div class="p-2 ms-auto"><a href="themtaikhoan.php" class="btn btn-primary">Thêm</a></div> 
+                        <div class="p-2 ms-auto"><a href="them_taikhoan.php" class="btn btn-primary">Thêm</a></div> 
                     </div>
                 </div>
                 <div class="accordion-body">
@@ -33,27 +33,50 @@
                     <table class="table table-bordered table-hover vertical-center">
                         <thead>
                         <tr>
-                            <th id="users-grid_cnumber">&nbsp;</th>
-                            <th id="users-grid_c0">id</th>
-                            <th id="users-grid_c1">Tên truy cập</th>
-                            <th id="users-grid_c2">email</th>
-                            <th id="users-grid_csex">Giới tính</th>
-                            <th id="users-grid_ccreated_time">Ngày tạo</th>
+                            <th>ID</th>
+                            <th>Tên truy cập</th>
+                            <th>Mật khẩu</th>
+                            <th>Email</th>
+                            <th>Giới tính</th>
                             <th>Cấp bậc</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                            <tr class="odd">
-                                <td>1</td>
-                                <td>3960</td>
-                                <td>nam157</td>
-                                <td>nam@gmail.com</td>
-                                <td>Nam</td>
-                                <td>27-09-2023</td>
-                                <td>Quản trị</td>
-                                <td style="width: 100px;" align="center"><a class="fa-solid fa-pen-to-square" href="suataikhoan.php"></a>&emsp;<a class="fa-solid fa-trash" href="#"></a></td>
-                            </tr>
+                            <?php
+                            // Kết nối đến cơ sở dữ liệu
+                            $servername = "localhost";
+                            $username = "root";
+                            $password = "";
+                            $dbname = "noi_that";
+
+                            $conn = new mysqli($servername, $username, $password, $dbname);
+
+                            if ($conn->connect_error) {
+                                die("Kết nối đến cơ sở dữ liệu thất bại: " . $conn->connect_error);
+                            }
+
+                            $sql = "SELECT id, ho_ten, mat_khau, email, gioi_tinh, cap_bac FROM user";
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<tr>";
+                                    echo "<td>" . $row["id"] . "</td>";
+                                    echo "<td>" . $row["ho_ten"] . "</td>";
+                                    echo "<td>" . $row["mat_khau"] . "</td>"; // Thay thế mật khẩu nguyên văn bằng dấu sao hoặc dòng văn bản khác để che giấu nó
+                                    echo "<td>" . $row["email"] . "</td>";
+                                    echo "<td>" . $row["gioi_tinh"] . "</td>";
+                                    echo "<td>" . $row["cap_bac"] . "</td>";
+                                    echo "<td style='width: 100px;' align='center'><a class='fa-solid fa-pen-to-square' href='sua_taikhoan.php?id=" . $row["id"] . "'></a>&emsp;<a class='fa-solid fa-trash' href='xoa_taikhoan.php?id=" . $row["id"] . "'></a></td>";
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "Không tìm thấy dữ liệu.";
+                            }
+
+                            $conn->close();
+                            ?>
                         </tbody>
                     </table>
                 </div>

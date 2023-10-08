@@ -43,7 +43,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                         // Cập nhật thông tin hãng với ảnh đại diện mới
                         $sqlUpdate = "UPDATE hang_san_xuat SET ten_hang = '$tenHangMoi', dia_chi = '$diaChiMoi', so_dien_thoai = '$soDienThoaiMoi', anh_dai_dien = '$targetFilePath' WHERE id = $id";
                         if (mysqli_query($conn, $sqlUpdate)) {
-                            header("Location: quan_ly_hang.php");
+                            header("Location: index.php");
                             exit();
                         } else {
                             echo "Lỗi: " . mysqli_error($conn);
