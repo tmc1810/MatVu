@@ -32,8 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Thực thi truy vấn và kiểm tra kết quả
     if (mysqli_query($conn, $sql)) {
-        header("Location: index.php");
-        exit();
+        echo "Thêm thành công!";
     } else {
         echo "Lỗi: " . $sql . "<br>" . mysqli_error($conn);
     }

@@ -35,7 +35,7 @@
           <li class="nav-link"><a href="../Quan_li_don_hang/index.php"><i class="fa-brands fa-shopify"></i>Quản lý đơn hàng</a></li>
           <li class="nav-link"><a href="../Quan_li_tai_khoan/index.php"><i class="fa-solid fa-users"></i>Quản lý tài khoản</a></li>
           <li class="nav-link"><a href="#"><i class="fa-solid fa-eye"></i>Xem website</a></li>
-          <li class="nav-link"><a href="../User/Sign-in-up.html"><i class="fa-solid fa-right-from-bracket"></i>Đăng xuất</a></li>
+          <li class="nav-link"><a href="./Dangnhap_Dangky/Sign-in-up.php"><i class="fa-solid fa-right-from-bracket"></i>Đăng xuất</a></li>
         </ul>
       </div>
   </nav>
