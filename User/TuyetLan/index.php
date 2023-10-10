@@ -66,7 +66,7 @@
               </form>
               </li>  
 
-                  <li><a href="cart.php"><i class='bx bx-cart-alt' ></i></a></li>
+                  <li><a href="../Giohang_Thanhtoan/giohang.php"><i class='bx bx-cart-alt' ></i></a></li>
                   <li><a href="#"><i class='bx bx-user'></i></a></li>
               </ul>
           </div>
