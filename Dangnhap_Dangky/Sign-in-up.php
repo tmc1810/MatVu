@@ -11,10 +11,10 @@
     <?php    
     include './connect.php';
     // Xử lý đăng nhập khi nút "Đăng nhập" được nhấn
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['dangnhap'])) {
         
         $username = $_POST["email"];
-        $matkhau = $_POST["matkhau"];
+        $matkhau = $_POST["pass"];
         
         // Truy vấn cơ sở dữ liệu để kiểm tra đăng nhập
         $sql = "SELECT id, cap_bac FROM user WHERE email = '$username' AND mat_khau = '$matkhau'";
@@ -37,7 +37,7 @@
         }
     }
 
-    ?>
+?>
     <div class="container">
         <div class="content">
             <div class="logo"><img src="../User/img/logo.png" weight="80px" width="80px"/>
@@ -66,27 +66,60 @@
                             <span class="icon">
                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAQFJREFUSEvtldERgjAMhtMsELoBbIKTqJMok8gmuolsUMIAjRcPPc5CC5x6Ptin3jX9v79p0hr48DAf1odZAOdciYhbACjVkIg0IlJZay8pg0lA13U7ETlNCFVEdIxBooDe+bkXqLz3tc4RcQcAeqLce19Ya5spSBTQtu3ZGKNpCZwyszo/AEBNRPtVAGYW3UhEgRHnXI6IVwBoiKh4O0AFYwYewGiKUgKpdYV8H6CVY4w59JebKvPnuohcxnojOAEz68Xls5UHgQrJsmwz3DsGuFfO2vFacX9AkMl/ipLF9RMpWt1oYy/r2DOs36P+YIu6efZTkUzywoDkn7xQLwi/AYcUkRl3IN9GAAAAAElFTkSuQmCC"/>
                             </span>
-                            <input type="password" id="matkhau" name="matkhau" required>
+                            <input type="password" name="pass" required>
                             <label for="password">Password</label>
                         </div>
 
-                        <button type="submit" class="btn"><input type="submit" style="color: #FFF; font-size: 25px;border: none;background-color: #be0000;" value="Đăng nhập"></button>
+                        <button type="submit" class="btn"><input type="submit" name="dangnhap" style="color: #FFF; font-size: 25px;border: none;background-color: #be0000;" value="Đăng nhập"></button>
 
                         <div class="login-register">
                             <p>Bạn chưa có tài khoản? <a href="#" class="register-link">Đăng Ký</a></p>
                         </div>
                 </form>
             </div>
+<?php
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['dangky'])) 
+{
+    // Kết nối đến cơ sở dữ liệu MySQL
+    $conn = mysqli_connect("localhost", "root", "", "noi_that");
+
+    // Kiểm tra kết nối
+    if (!$conn) {
+        die("Kết nối không thành công: " . mysqli_connect_error());
+    }
+
+    // Lấy dữ liệu từ biểu mẫu
+    $ho_ten = $_POST['hoten'];
+    $email = $_POST['email'];
+    $mat_khau = ($_POST['pass']);
+    $check_query = "SELECT * FROM user WHERE email = '$email'";
+    $result = $conn->query($check_query);
+
+    if ($result->num_rows > 0) {
+        echo '<div style="position: fixed; font-size:16px; margin-left:-950px; top:-90px;">Email đăng ký đã tồn tại. Vui lòng sử dụng email khác.</div>';
+    } else {
+    // Tạo truy vấn SQL để chèn dữ liệu
+        $sql = "INSERT INTO user (ho_ten, email, cap_bac, mat_khau) VALUES ('$ho_ten', '$email', 'Khách' ,'$mat_khau')";
+    
+        if (mysqli_query($conn, $sql)) {
+        } else {    
+            echo "Lỗi: " . $sql . "<br>" . mysqli_error($conn);
+        }
+    }
+}
+    // Đóng kết nối đến cơ sở dữ liệu
+    mysqli_close($conn);
+?>
             <div class="form-box register">
-                <form  action="#" name="myForm">
+                <form method="post" action="#">
                     <h1>Đăng Ký</h1>
 
                         <div class="input-box">
                             <span class="icon">
                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAP9JREFUSEvFlOsNwjAMhO82gUmgm8AkwCSwCd2EMonRSU3VpmkcGir8q1Kj++zzg9g4uLE+igBmtgNwAXAC0AFoAdxI6jsbLsDMjgCeCRWJn0kKthglgBcAVZCKjuR+NcDMZMndcaHJVZGtwMyuvfc5hnqhd8nwAEv+j8XUh8dagLxXg7fpgbLKTJF+Z/3XA3eKekjYA1mmCCNavwfeInn/iyrwRGr2QON3ABCsGWuFk/H+ekz7xmrBlqYnTnrxbMwscqbGc2s2VSlA7vZ4gNltmgAKT4MHmZyOGCDfdeBqoiXZBIEYUGNP0JzYFAOsJvUha3LQ/e+i/aSaX4jkND45MFsZqs//kwAAAABJRU5ErkJggg=="/>
                             </span>
-                            <input type="text" name="ho_ten" required>
+                            <input type="text" name="hoten" id="hoten" required>
                             <label>Name</label>
                         </div>
 
@@ -102,7 +135,7 @@
                             <span class="icon">
                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAQFJREFUSEvtldERgjAMhtMsELoBbIKTqJMok8gmuolsUMIAjRcPPc5CC5x6Ptin3jX9v79p0hr48DAf1odZAOdciYhbACjVkIg0IlJZay8pg0lA13U7ETlNCFVEdIxBooDe+bkXqLz3tc4RcQcAeqLce19Ya5spSBTQtu3ZGKNpCZwyszo/AEBNRPtVAGYW3UhEgRHnXI6IVwBoiKh4O0AFYwYewGiKUgKpdYV8H6CVY4w59JebKvPnuohcxnojOAEz68Xls5UHgQrJsmwz3DsGuFfO2vFacX9AkMl/ipLF9RMpWt1oYy/r2DOs36P+YIu6efZTkUzywoDkn7xQLwi/AYcUkRl3IN9GAAAAAElFTkSuQmCC"/>
                             </span>
-                            <input type="password" name="mat_khau"required>
+                            <input type="password" name="pass"required>
                             <label>Password</label>
                         </div>
 
@@ -110,11 +143,11 @@
                             <span class="icon">
                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAQFJREFUSEvtldERgjAMhtMsELoBbIKTqJMok8gmuolsUMIAjRcPPc5CC5x6Ptin3jX9v79p0hr48DAf1odZAOdciYhbACjVkIg0IlJZay8pg0lA13U7ETlNCFVEdIxBooDe+bkXqLz3tc4RcQcAeqLce19Ya5spSBTQtu3ZGKNpCZwyszo/AEBNRPtVAGYW3UhEgRHnXI6IVwBoiKh4O0AFYwYewGiKUgKpdYV8H6CVY4w59JebKvPnuohcxnojOAEz68Xls5UHgQrJsmwz3DsGuFfO2vFacX9AkMl/ipLF9RMpWt1oYy/r2DOs36P+YIu6efZTkUzywoDkn7xQLwi/AYcUkRl3IN9GAAAAAElFTkSuQmCC"/>
                             </span>
-                            <input type="password" name="mat_khau "required>
+                            <input type="password" name="repass"required>
                             <label>Nhập lại Password</label>
                         </div>
 
-                        <input type="submit" value="Đăng Ký" onclick="validateForm()" class="btn">
+                        <input type="submit" value="Đăng Ký" onclick="showAlert();" name="dangky" class="btn">
 
                         <div class="login-register">
                             <p>Bạn đã có tài khoản? <a href="#" class="login-link">Đăng Nhập</a></p>
@@ -125,5 +158,11 @@
     </div>
 
 <script src="scriptsign.js"></script>
+<script>
+    function showAlert() {
+    var message = "Đăng ký thành công";
+    alert(message); 
+    }
+</script>
 </body>
 </html>
