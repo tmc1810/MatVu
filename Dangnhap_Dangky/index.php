@@ -26,9 +26,9 @@
             
             // Chuyển hướng người dùng dựa trên cấp bậc
             if ($cap_bac == "Quản trị") {
-                header("Location: ../Admin/Bang_dieu_khien/index.php");
+                header("Location: ../Admin/Bang_dieu_khien");
             } elseif ($cap_bac == "Khách") {
-                header("Location: ../User/TuyetLan/index.php");
+                header("Location: ../User/TuyetLan");
             } else {
                 echo "Cấp bậc không hợp lệ";
             }
