@@ -38,6 +38,15 @@
         
 </style>
 </head>
+<?php
+        session_start();
+
+        if (!isset($_SESSION['visits'])) {
+            $_SESSION['visits'] = 1;
+        } else {
+            $_SESSION['visits']++;
+        }
+?>
 <body>
     <div style = "  background-color: rgba(255,0,0,0.3)" >
         <!-- header -->
@@ -66,7 +75,7 @@
               </form>
               </li>  
 
-                  <li><a href="../Giohang_Thanhtoan/giohang.php"><i class='bx bx-cart-alt' ></i></a></li>
+                  <li><a href="cart.php"><i class='bx bx-cart-alt' ></i></a></li>
                   <li><a href="#"><i class='bx bx-user'></i></a></li>
               </ul>
           </div>
