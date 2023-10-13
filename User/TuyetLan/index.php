@@ -39,13 +39,13 @@
 </style>
 </head>
 <?php
-        session_start();
+    session_start();
 
-        if (!isset($_SESSION['visits'])) {
-            $_SESSION['visits'] = 1;
-        } else {
-            $_SESSION['visits']++;
-        }
+    if (!isset($_SESSION['visits'])) {
+        $_SESSION['visits'] = 1;
+    } else {
+        $_SESSION['visits']++;
+    }
 ?>
 <body>
     <div style = "  background-color: rgba(255,0,0,0.3)" >
