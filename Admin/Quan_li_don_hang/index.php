@@ -20,12 +20,12 @@
                 <div class="accordion-body">
                     <div class="search-active-form" style="position: relative; margin-top: 10px;">
                         <div class="form-search">
-                            <form action="timkiem_donhang.php" method="post">  
-                                <input placeholder="Mã đơn hàng"  style="height:35px;" type="text" value="" />  
-                                <input placeholder="Khách hàng" style="height:35px;" type="text" maxlength="100" /> 
+                            <form action="timkiem_donhang.php" method="get">  
+                                <input placeholder="Mã đơn hàng" name="ma_don_hang" style="height:35px;" type="text" value="" />  
+                                <input placeholder="Khách hàng" name="ho_ten" style="height:35px;" type="text" maxlength="100" /> 
                                 <button class="btn bg-warning" type="submit" >Tìm kiếm</button> 
-                                </form>
-                            <br>
+                                
+                            <br><br>
                             <table class="table table-bordered table-hover vertical-center">
                                 <thead>
                                     <tr>
@@ -36,6 +36,7 @@
                                         <th>Trạng thái đơn hàng</th>
                                         <th>Trạng thái vận chuyển</th>
                                         <th>Tổng cộng</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -55,6 +56,7 @@
                                                         echo '<td>' . $row['trangthai_donhang'] . '</td>';
                                                         echo '<td>' . $row['trangthai_vanchuyen'] . '</td>';
                                                         echo '<td>' . number_format($row['gia']). ' đ'; '</td>';
+                                                        echo "<td style='width: 100px;' align='center'><a class='fa-solid fa-pen-to-square' href='sua_donhang.php?id=" . $row["id"] . "'></td>";
                                                     echo '</tr>';
                                                 }
                                             }
@@ -64,7 +66,7 @@
                                     ?>
                                 </tbody>
                             </table>
-                            
+                        </form>
                         </div>
                     </div>
                 </div>

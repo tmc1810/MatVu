@@ -9,14 +9,46 @@
     <div class="content">
         <div class="container pt-5">
             <div style="border: 2px solid; width: 1350px; padding: 20px;">
+                <?php
+                    include '../Main_QuanTri/connect.php';
+
+                    $sql = "SELECT gia, trangthai_thanhtoan FROM chi_tiet_don_hang";
+                    $result = $conn->query($sql);
+                    if ($result->num_rows > 0) {
+                    $totalPrice = 0;
+
+                    while ($row = $result->fetch_assoc()) {
+                        if($row['trangthai_thanhtoan'] == "Đã thanh toán")
+                        {
+                            $totalPrice += $row["gia"];
+                        }
+                    }
+
+                    } else {
+                    echo "Không tìm thấy dữ liệu";
+                    }
+                    function formatPrice($totalPrice) {
+                        if ($totalPrice >= 1000 && $totalPrice < 1000000) {
+                            return number_format($totalPrice / 1000) .  'k';
+                        } else if($totalPrice >= 1000000 && $totalPrice < 1000000000){
+                            return number_format($totalPrice / 1000000) . "tr" ;
+                        }
+
+                        else if($totalPrice >= 1000000000 && $totalPrice < 1000000000000){
+                            return number_format($totalPrice / 1000000000) . "tỷ" ;
+                        }
+                    }
+                    // Đóng kết nối đến cơ sở dữ liệu
+                    $conn->close();
+                ?>
                 <div style="position: absolute;background-color: yellow; width: 600px; height: 300px;border-radius: 30px;z-index:1;">
-                    <p style="font-size:170px;padding: 70px;" class="fa-solid fa-sack-dollar"></p>
-                    <table style="margin-top: -300px;margin-left: 300px;font-size: 30px;">
+                    <p style="font-size:170px;padding: 80px;" class="fa-solid fa-sack-dollar"></p>
+                    <table style="margin-top: -300px;margin-left: 270px;font-size: 30px;">
                         <tr>
                             <th>Tổng doanh thu</th>
                         </tr>
                         <tr>
-                            <td style="font-size: 150px;" align="center">0</td>
+                            <td style="font-size: 100px;"><span>~</span><?php echo formatPrice($totalPrice); ?></td>
                         </tr>
                     </table>
                 </div>

@@ -10,60 +10,39 @@
 <body>  
     <?php    
     include './connect.php';
+    session_start();
     // Xử lý đăng nhập khi nút "Đăng nhập" được nhấn
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['dangnhap'])) {
+        if (isset($_POST['email']) && isset($_POST['pass'])) {
+            $email = $_POST["email"];
+            $matkhau = $_POST["pass"];
         
-        $email = $_POST["email"];
-        $matkhau = $_POST["pass"];
+            // Kiểm tra thông tin tài khoản trong cơ sở dữ liệu bằng email.
+            $sql = "SELECT ho_ten, id, cap_bac FROM user WHERE email = '$email' AND mat_khau = '$matkhau'";
+            $result = $conn->query($sql);
         
-        // Truy vấn cơ sở dữ liệu để kiểm tra đăng nhập
-        $sql = "SELECT ho_ten, id, cap_bac FROM user WHERE email = '$email' AND mat_khau = '$matkhau'";
-        $result = $conn->query($sql);
-        
-        if ($result->num_rows == 1) {
-            $row = $result->fetch_assoc();
-            $cap_bac = $row["cap_bac"];
+            if ($result->num_rows == 1) {
+                // Đăng nhập thành công, lấy tên người dùng từ kết quả truy vấn.
+                $row = $result->fetch_assoc();
+                $username = $row['ho_ten'];
+                $cap_bac = $row["cap_bac"];
             
-            // Chuyển hướng người dùng dựa trên cấp bậc
-            if ($cap_bac == "Quản trị") {
-                $admin_username = $row["username"];
-                header("Location: ../Admin/Bang_dieu_khien");
-            } elseif ($cap_bac == "Khách") {
-                header("Location: ../User/TuyetLan");
+                // Chuyển hướng người dùng dựa trên cấp bậc
+                if ($cap_bac == "Quản trị") {
+                    $admin_username = $row["username"];
+                    $_SESSION['ho_ten'] = $username;
+                    header("Location: ../Admin/Bang_dieu_khien");
+                } elseif ($cap_bac == "Khách") {
+                    header("Location: ../User/TuyetLan");
+                } else {
+                    echo "Cấp bậc không hợp lệ";
+                }
             } else {
-                echo "Cấp bậc không hợp lệ";
+                // Thông báo lỗi nếu thông tin tài khoản không hợp lệ.
+                $error_message = "Thông tin tài khoản không hợp lệ";
             }
-        } else {
-            echo "Đăng nhập thất bại. Vui lòng kiểm tra tên đăng nhập và mật khẩu.";
         }
     }
-?>
-
-<?php
-    include './connect.php';
-    session_start();
-if (isset($_POST['email']) && isset($_POST['pass'])) {
-    $email = $_POST["email"];
-    $matkhau = $_POST["pass"];
-
-    // Kiểm tra thông tin tài khoản trong cơ sở dữ liệu bằng email.
-    $sql = "SELECT ho_ten FROM user WHERE email = '$email' AND mat_khau = '$matkhau'";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows == 1) {
-        // Đăng nhập thành công, lấy tên người dùng từ kết quả truy vấn.
-        $row = $result->fetch_assoc();
-        $username = $row['ho_ten'];
-
-        // Lưu tên người dùng vào biến session.
-        $_SESSION['ho_ten'] = $username;
-        
-        header("Location: http://localhost/Noi_That/MatVu/Admin/Bang_dieu_khien/");
-    } else {
-        // Thông báo lỗi nếu thông tin tài khoản không hợp lệ.
-        $error_message = "Thông tin tài khoản không hợp lệ";
-    }
-}
 ?>
     <div class="container">
         <div class="content">

@@ -5,20 +5,9 @@
 
 <body>
     <div class="container">
-        <!-- <h1>Kết quả tìm kiếm tài khoản</h1> -->
         <?php
         
-        // Kết nối đến cơ sở dữ liệu
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "noi_that";
-        
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        
-        if ($conn->connect_error) {
-            die("Kết nối đến cơ sở dữ liệu thất bại: " . $conn->connect_error);
-        }
+        include '../Main_QuanTri/connect.php';
         
         $searchId = $_GET["ma_don_hang"];
         $searchName = $_GET["ho_ten"];
@@ -45,6 +34,7 @@
                 echo '<td>' . $row['trangthai_donhang'] . '</td>';
                 echo '<td>' . $row['trangthai_vanchuyen'] . '</td>';
                 echo '<td>' . number_format($row['gia']). ' đ'; '</td>';
+                echo "<td style='width: 100px;' align='center'><a class='fa-solid fa-pen-to-square' href='sua_donhang.php?id=" . $row["id"] . "'></td>";
                 echo '</tr>';
             }
         } else {

@@ -38,27 +38,7 @@ include '../Main_QuanTri/connect.php';
                                 ?>
                             </ul>
                             
-                            <?php
-                                if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                                    // Lấy thông tin được gửi từ biểu mẫu
-                                    $trangthai_donhang = $_POST["trangthai_donhang"];
-                                    $trangthai_vanchuyen = $_POST["trangthai_vanchuyen"];
-                                    $trangthai_thanhtoan = $_POST["trangthai_thanhtoan"];
-                                
-                                    // Query SQL để cập nhật thông tin tài khoản
-                                    $sql= "UPDATE chi_tiet_don_hang SET trangthai_donhang='$trangthai_donhang', trangthai_vanchuyen='$trangthai_vanchuyen', trangthai_thanhtoan='$trangthai_thanhtoan'";
-                                
-                                    if (mysqli_query($conn, $sql)) {
-                                        header("Location: index.php");
-                                        exit();
-                                    } else {
-                                        echo "Lỗi: " . mysqli_error($conn);
-                                    }
-                                
-                                    // Đóng kết nối CSDL
-                                    mysqli_close($conn);
-                                }
-                            ?>
+                           
                         <form action="#" method="post">
                             <div class="mb-3 row">
                                 <label for="staticEmail" class="col-sm-2 col-form-label">Trạng thái đơn hàng:</label>
@@ -103,29 +83,45 @@ include '../Main_QuanTri/connect.php';
                                         <th>Tổng cộng</th>
                                     </tr>
                                 </thead>
-                                <?php
-                                    $sql = "SELECT chi_tiet_don_hang.*, san_pham.ten_san_pham,san_pham.gia_ban FROM chi_tiet_don_hang
-                                    LEFT JOIN san_pham ON chi_tiet_don_hang.ma_san_pham = san_pham.id";
-                                    $result = $conn->query($sql);
-                                ?>
                                 <tbody>
                                     <tr>
-                                        <?php
+                                    <?php
+                                            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                                // Lấy thông tin được gửi từ biểu mẫu
+                                                $trangthai_donhang = $_POST["trangthai_donhang"];
+                                                $trangthai_vanchuyen = $_POST["trangthai_vanchuyen"];
+                                                $trangthai_thanhtoan = $_POST["trangthai_thanhtoan"];
+                                                
+                                                // Query SQL để cập nhật thông tin tài khoản
+                                                $sql= "UPDATE chi_tiet_don_hang SET trangthai_donhang='$trangthai_donhang', trangthai_vanchuyen='$trangthai_vanchuyen', trangthai_thanhtoan='$trangthai_thanhtoan' WHERE id = $id";
+                                            
+                                                if (mysqli_query($conn, $sql)) {
+                                                    header("Location: index.php");
+                                                    exit();
+                                                } else {
+                                                    echo "Lỗi: " . mysqli_error($conn);
+                                                }
+                                            }
+
+                                            $sql = "SELECT chi_tiet_don_hang.*, san_pham.ten_san_pham,san_pham.gia_ban FROM chi_tiet_don_hang
+                                            LEFT JOIN san_pham ON chi_tiet_don_hang.ma_san_pham = san_pham.id WHERE id = $id";
+                                            $result = $conn->query($sql);
                                             if ($result->num_rows > 0) {
                                                 // Lặp qua mỗi hàng dữ liệu
                                                 while ($row = $result->fetch_assoc()) {
+                                                    echo '<tr>';
                                                     echo '<td>' . $row['ma_don_hang'] . '</td>';
                                                     echo '<td>' . $row['ten_san_pham'] . '</td>';
                                                     echo '<td>' . $row['ma_san_pham'] . '</td>';
                                                     echo '<td>' . $row['so_luong'] . '</td>';
                                                     echo '<td>' . number_format($row['gia_ban']). ' đ'; '</td>';
                                                     echo '<td>' . number_format($row['gia']). ' đ'; '</td>';
+                                                    echo '</tr>';
                                                 }
                                             } else {
                                                 echo "Không có dữ liệu.";
                                             }
                                         ?>
-                                    </tr>
                                 </tbody>
                             </table>
                             <div class="control-group form-group buttons">

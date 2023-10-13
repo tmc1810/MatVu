@@ -39,12 +39,12 @@
 
                 <ul class="nav flex-column">
                     <li class="nav-item"><h5>FANPAGE</h5></li>
-                    <li class="nav-item"><img src="./img/fanpage.png" width="100%"></li>
+                    <li class="nav-item"><img src="../img/fanpage.png" width="100%"></li>
                 </ul>
 
                 <ul class="nav flex-column">
                     <li class="nav-item"><h5>THEO DÕI CHÚNG TÔI</h5></li>
-                    <li class="nav-item"><img src="./img/follow.png" width="100%"></li>
+                    <li class="nav-item"><img src="../img/follow.png" width="100%"></li>
                 </ul>
             </ul>
         </div><br>
