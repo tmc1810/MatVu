@@ -2,18 +2,6 @@
     <link rel="shortcut icon" type="image/png" href="../img/logo.png" />
     <title>BELLA VITA INTERIOR</title>
     <style>
-
-    body {
-        font-family: Arial, sans-serif;
-    }
-
-    .container {
-        margin-top: 20px;
-        display: flex;
-        justify-content: space-between;
-    }
-
-
     .list-group {
         width: 200px;
         margin-right: 20px;
@@ -67,48 +55,49 @@
 
 <body>
 <div style="position: absolute;width: 1000px;height: 400px;background-color: #FFF; margin-left: 650px;margin-top: 150px;">
-        <div class="subcontainer ">
-            <ul class="nav nav-pills">
-                <li class="nav-item">
-                    <h2 style="font-weight: 400;">Thông tin tài khoản</h2>
-                    <hr>
-                    <form>
-                        <div class="form-group">
-                            <label for="fullname">Họ và tên</label>
-                            <input type="text" id="fullname" value="Ngô Văn Bá">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" value="tmc10182k3@gmail.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="dob">Ngày sinh</label>
-                            <input type="date" id="dob">
-                        </div>
-                        <div class="form-group">
-                            <label for="gender">Giới tính</label>
-                            <select id="gender">
-                                <option value="male">Nam</option>
-                                <option value="female">Nữ</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Số điện thoại</label>
-                            <input type="tel" id="phone">
-                        </div>
-                        <div class="form-group">
-                            <label for="address">Địa chỉ</label>
-                            <input type="text" id="address">
-                        </div>
-                        <div class="form-group" style="padding-bottom: 20px;">
-                            <button type="submit">Cập nhật</button>
-                        </div>
-                    </form>
-                </li>
-            </ul>
-        </div>
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <h2 style="font-weight: 400;">Thông tin tài khoản</h2>
+            <hr>
+            <?php
+                include '../Main_NguoiDung/connect.php';
+?>
+            <form method="post">
+                <div class="form-group">
+                    <label for="fullname">Họ và tên</label>
+                    <input type="text" name="fullname" value="<?php echo $hoTen; ?>">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" value="<?php echo $email; ?>">
+                </div>
+                <div class="form-group">
+                    <label for="dob">Ngày sinh</label>
+                    <input type="date" name="datebirth" value="<?php echo $ngaysinh; ?>">
+                </div>
+                <div class="form-group">
+                    <label for="gender">Giới tính</label>
+                    <select name="gender">
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Số điện thoại</label>
+                    <input type="tel" name="phone" value="<?php echo $sodienthoai; ?>">
+                </div>
+                <div class="form-group">
+                    <label for="address">Địa chỉ</label>
+                    <input type="text" name="address" value="<?php echo $diachi; ?>">
+                </div>
+                <div class="form-group" style="padding-bottom: 20px;">
+                    <button type="submit">Cập nhật</button>
+                </div>
+            </form>
+        </li>
+    </ul>
 </div>
-        <?php 
-        include 'formthongtin.php';
-    ?>
+<?php 
+    include 'formthongtin.php';
+?>
 </body>

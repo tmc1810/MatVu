@@ -8,10 +8,17 @@
         include '../Main_NguoiDung/navbarweb.php';
         include '../Main_NguoiDung/connect.php';
     ?>
+<?php
+session_start();
 
+if (!isset($_SESSION['id'])) {
+}
+
+$id = $_SESSION['id'];
+?>
     <div class="container pt-5">
         <div class="list-group" style="width: 250px;">
-            <a class="list-group-item list-group-item-action active" aria-current="true">Ngô Văn Bá</a>
+            <a class="list-group-item list-group-item-action active" aria-current="true"><?php echo $id; ?></a>
             <a href="thongtincanhan.php" class="list-group-item list-group-item-action">Thông tin tài khoản</a>
             <a href="thaydoimatkhau.php" class="list-group-item list-group-item-action">Thay đổi mật khẩu</a>
             <a href="donhang.php" class="list-group-item list-group-item-action">Đơn hàng</a>

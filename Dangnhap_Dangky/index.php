@@ -24,15 +24,16 @@
             if ($result->num_rows == 1) {
                 // Đăng nhập thành công, lấy tên người dùng từ kết quả truy vấn.
                 $row = $result->fetch_assoc();
+                $id = $row['id'];
                 $username = $row['ho_ten'];
                 $cap_bac = $row["cap_bac"];
             
                 // Chuyển hướng người dùng dựa trên cấp bậc
                 if ($cap_bac == "Quản trị") {
-                    $admin_username = $row["username"];
                     $_SESSION['ho_ten'] = $username;
                     header("Location: ../Admin/Bang_dieu_khien");
                 } elseif ($cap_bac == "Khách") {
+                    $_SESSION['id'] = $id;
                     header("Location: ../User/TuyetLan");
                 } else {
                     echo "Cấp bậc không hợp lệ";
